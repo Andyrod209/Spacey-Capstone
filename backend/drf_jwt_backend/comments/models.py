@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-from backend.drf_jwt_backend.posts.models import Post
+from posts.models import Post
 
 # Create your models here.
 class Comment(models.Model):
