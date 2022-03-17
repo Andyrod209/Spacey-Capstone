@@ -28,5 +28,6 @@ def create_post(request):
         serializer = PostSerializer(post, many=True)
         return Response(serializer.data)
 
-# When I get to MVP let's create a edit and delete post section!!!!!!!!!!!!!!!!!!!
+
+
 
