@@ -8,4 +8,4 @@ class Reply(models.Model):
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     text = models.CharField(max_length=250)
     likes = models.IntegerField()
-    dislike = models.IntegerField()
+    dislikes = models.IntegerField()
