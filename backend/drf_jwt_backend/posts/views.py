@@ -28,6 +28,27 @@ def create_post(request):
         serializer = PostSerializer(post, many=True)
         return Response(serializer.data)
 
-
-
+@api_view(['PUT', 'GET'])
+@permission_classes([IsAuthenticated])
+def update_post(request, pk):
+    if request.method == 'PUT':
+        post = Post.objects.get(pk=pk)
+        serializer = PostSerializer(post, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        post = Post.objects.get(pk=pk)
+        serializer = PostSerializer(post)
+        return Response(serializer.data)
+        
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_post(request, pk):
+    post = Post.objects.get(pk=pk)
+    if post.delete():
+        # displays a 204 on postman meaning it deletes it
+        return Response(status.HTTP_204_NO_CONTENT)
+    return Response(status.HTTP_400_BAD_REQUEST)
 
