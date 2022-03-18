@@ -11,10 +11,11 @@ const Navbar = () => {
     <div className="navBar">
       <ul>
         <li className="brand">
-          <Link to="/" style={{ textDecoration: "none", color: "white" }}>
-            <b>React/Django JWT</b>
+          <Link to="/" style={{ textDecoration: "none", color: "white", textAlign: "center" }}>
+            <b>Spacey</b>
           </Link>
         </li>
+        <li><button>Profile</button></li>
         <li>
           {user ? (
             <button onClick={logoutUser}>Logout</button>
