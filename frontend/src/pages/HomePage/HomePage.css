@@ -1,0 +1,11 @@
+.post {
+    display: flex;
+    flex-direction: column;
+    border: 10px solid transparent;
+    padding: 15px;
+    border-color: black;
+}
+
+li {
+    font-size: medium;
+}

@@ -2,6 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
+import "./HomePage.css";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -26,11 +27,11 @@ const HomePage = () => {
       <h1>Home Page for {user.username}</h1>
       <>{posts.map((post) => {
         return (
-          <ul style={{ }}>
-              <li>username:{post.user}</li>
-              <li>{post.text}</li>
-              <li>{post.likes}</li>
-              <li>{post.dislikes}</li>
+          <ul className="post">
+              <li>Username: {post.user}</li>
+              <li>Post: {post.text}</li>
+              <li>Likes {post.likes}</li>
+              <li>Dislikes {post.dislikes}</li>
           </ul>
         )
       })}
