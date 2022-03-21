@@ -15,6 +15,7 @@ const Navbar = () => {
             <b>Spacey</b>
           </Link>
         </li>
+        <li><button>Post</button></li>
         <li><button>Profile</button></li>
         <li>
           {user ? (
