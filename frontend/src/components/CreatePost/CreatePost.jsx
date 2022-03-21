@@ -2,10 +2,9 @@ import axios from "axios";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 
-const CreatePost = () => {
+const CreatePost = (props) => {
     const [user, token] = useAuth();
     const [text , setText] = useState();
-    const [post, setPost] = useState({});
     
     async function createPost() {
         try {
@@ -18,7 +17,7 @@ const CreatePost = () => {
             {Authorization: 'Bearer ' + token,},
             })
             console.log(response.data);
-            setPost(post);
+            props.setPost([...props.posts, response.data]);
         } catch (error) {
             console.log(error.response);
         }
@@ -27,6 +26,7 @@ const CreatePost = () => {
     function handleSubmit(event){
         event.preventDefault();
         createPost()
+        
     }
 
     

@@ -30,7 +30,7 @@ const HomePage = () => {
   return (
     <div className="container">
       <h1>Home Page for test</h1>
-      <CreatePost />
+      <CreatePost setPost={setPosts} posts={posts}/>
       <>{[...posts].reverse().map((post, index) => {
         return (
             <div className="post" key={index}>

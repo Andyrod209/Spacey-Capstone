@@ -24,7 +24,7 @@ li {
 }
 
 .navBar button:hover {
-  background: white;
+  background: rgb(255, 255, 255);
   color: steelblue;
   cursor: pointer;
 }
