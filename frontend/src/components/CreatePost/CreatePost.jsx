@@ -9,6 +9,7 @@ const CreatePost = (props) => {
     async function createPost() {
         try {
             let post = {
+                "user": user.user_id,
                 "text": text,
                 "likes": 0,
                 "dislikes": 0
@@ -17,7 +18,7 @@ const CreatePost = (props) => {
             {Authorization: 'Bearer ' + token,},
             })
             console.log(response.data);
-            props.setPost([...props.posts, response.data]);
+            await props.fetchPosts();
         } catch (error) {
             console.log(error.response);
         }

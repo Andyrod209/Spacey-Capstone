@@ -21,7 +21,6 @@ const HomePage = () => {
       let response = await axios.get("http://127.0.0.1:8000/api/posts/view_posts/");
       let data = response.data
       setPosts(data);
-     console.log(data)
 
     } catch (error) {
       console.log(error.message);
@@ -36,7 +35,7 @@ const HomePage = () => {
   return (
     <div className="container">
       <h1>Home Page for test</h1>
-      <CreatePost setPost={setPosts} posts={posts}/>
+      <CreatePost setPost={setPosts} posts={posts} fetchPosts = {fetchPosts} />
       <EditPost postId={postId} fetchPosts = {fetchPosts}/>
       <>{[...posts].reverse().map((post, id) => {
         return (
