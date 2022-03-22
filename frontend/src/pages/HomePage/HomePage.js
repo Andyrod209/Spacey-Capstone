@@ -13,19 +13,20 @@ const HomePage = () => {
   const [posts, setPosts] = useState([{}]);
   const [postId, setPostId] = useState(Number)
 
-  useEffect(() => {
-    fetchPosts();
-  }, [token]);
   const fetchPosts = async () => {
     try {
       let response = await axios.get("http://127.0.0.1:8000/api/posts/view_posts/");
       let data = response.data
       setPosts(data);
-
+      
     } catch (error) {
       console.log(error.message);
     }
   };
+  
+  useEffect(() => {
+    fetchPosts();
+  }, [token]);
 
   async function postDelete(id){
     try {

@@ -32,13 +32,13 @@ def profile_data(request):
 @permission_classes([IsAuthenticated])
 def edit_profile(request, pk):
     if request.method == 'PUT':
-        profile = userProfile.objects.get(pk=pk)
+        profile = userProfile.objects.get(user_id=pk)
         serializer = userProfileSerializer(profile, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
-        profile = userProfile.objects.get(pk=pk)
+        profile = userProfile.objects.get(user_id=pk)
         serializer = userProfileSerializer(profile)
         return Response(serializer.data)
