@@ -26,6 +26,18 @@ const HomePage = () => {
       console.log(error.message);
     }
   };
+
+  async function postDelete(id){
+    try {
+    let response = await axios.delete(`http://127.0.0.1:8000/api/posts/delete/${id}/`, { headers: 
+    {Authorization: 'Bearer ' + token,},
+    }) 
+    await fetchPosts();
+    console.log(response)
+  } catch (error) {
+    console.log(error.response);
+}
+};
   
   let getId = (id) => {
     setPostId(id)
@@ -55,6 +67,7 @@ const HomePage = () => {
               <li>Likes {post.likes}</li>
               <li>Dislikes {post.dislikes}</li>
               <button onClick={() => getId(post.id)}>Edit</button>
+              <button onClick={()=> postDelete(post.id)}>DELETE</button>
           </ul>
             }
           </div>
