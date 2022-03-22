@@ -6,10 +6,10 @@ const ProfilePage = () => {
 
     const [user, token] = useAuth()
     const [profiles, setProfiles] = useState([])
-
+    const [profileChange, setProfileChange] = useState()
+    console.log(profileChange)
     useEffect(() => {
         getProfile();
-
     }, [token]);
 
     async function getProfile(){
@@ -20,7 +20,19 @@ const ProfilePage = () => {
     }
 
     async function editProfile(){
-        let response = await axios.get(`http://127.0.0.1:8000/api/profiles/edit/${user.user_id}/`)
+        let about = {
+            user: user.user_id,
+            about: profileChange 
+        };
+        let response = await axios.put(`http://127.0.0.1:8000/api/profiles/edit/${user.user_id}/`, about, { headers: 
+        {Authorization: 'Bearer ' + token,},})
+        console.log(response) 
+        await getProfile()
+    }
+
+    function handleSubmit(event){
+        event.preventDefault();
+        editProfile();
     }
 
     return ( 
@@ -28,7 +40,9 @@ const ProfilePage = () => {
             <h1>{user.username}</h1>
                 <h3>Profile</h3>
                 <img src="https://i.ibb.co/pdJfzx9/profile-picture.jpg" alt="profile-picture" border="0" />
-            <a><h4>About Me</h4></a>
+            <h4>About Me</h4>
+                <input type='textbox' onChange={(event) => setProfileChange(event.target.value)}/>
+                <button type="submit" onClick={handleSubmit}>Change</button>
                 <p>{profiles.about}</p>
                 <br/>
         <div className="listFlex">
