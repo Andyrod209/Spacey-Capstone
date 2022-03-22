@@ -25,6 +25,5 @@ urlpatterns = [
     path('api/replies/', include('replies.urls')),
     path('api/profiles/', include('userProfile.urls'))
 ]
-# testing
 
 

@@ -1,10 +1,9 @@
-
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.decorators import api_view, permission_classes
 
-import userProfile
+from .models import userProfile
 from .serializers import userProfileSerializer
 
 # Create your views here.
@@ -27,4 +26,19 @@ def profile_data(request):
     elif request.method == 'GET': 
         profile = userProfile.objects.filter(user_id=request.user.id)
         serializer = userProfileSerializer(profile, many=True)
+        return Response(serializer.data)
+
+@api_view(['PUT', 'GET'])
+@permission_classes([IsAuthenticated])
+def edit_profile(request, pk):
+    if request.method == 'PUT':
+        profile = userProfile.objects.get(pk=pk)
+        serializer = userProfileSerializer(profile, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        profile = userProfile.objects.get(pk=pk)
+        serializer = userProfileSerializer(profile)
         return Response(serializer.data)
