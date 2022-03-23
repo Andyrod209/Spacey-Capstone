@@ -9,11 +9,12 @@ const CreatePost = (props) => {
     async function createPost() {
         try {
             let post = {
-                "user": user.user_id,
+                "user": user.username,
                 "text": text,
                 "likes": 0,
                 "dislikes": 0
             }
+            console.log(post)
             let response = await axios.post('http://127.0.0.1:8000/api/posts/', post ,{ headers: 
             {Authorization: 'Bearer ' + token,},
             })

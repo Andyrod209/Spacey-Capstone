@@ -10,19 +10,18 @@ import ToggleButton from "../../components/ToggleButton/ToggleButton";
 import { useNavigate } from "react-router-dom";
 import PeopleInSpace from "../../components/PeopleInSpace/PeopleInSpace";
 import CommentsPage from "../CommentsPage/CommentsPage";
-import { Routes, Route } from "react-router-dom";
+// import { Routes, Route, Link } from "react-router-dom";
 // import { useLocation } from "react-router-dom";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
   // The "token" value is the JWT token that you will send in the header of any request requiring authentication
   const [user, token] = useAuth();
-  const [posts, setPosts] = useState([{}]);
+  const [posts, setPosts] = useState([]);
   const [postId, setPostId] = useState(Number);
   const [apod, setApod] = useState();
   const [title, setTitle] = useState();
   const [explanation, setExplanation] = useState();
-  // const location = useLocation();
 
   const fetchPosts = async () => {
     try {
@@ -34,10 +33,11 @@ const HomePage = () => {
       console.log(error.message);
     }
   };
-  
+
   useEffect(() => {
     fetchPosts();
     getAPOD();
+    // comments();
   }, [token]);
 
   async function postDelete(id){
@@ -83,6 +83,11 @@ const HomePage = () => {
       getId(id)
       navigate('/comments')
     }
+
+    // function comments () {
+    //   const location = useLocation()
+    //   const { postId } = location.state
+    // }
   
   return (
     <div className="container">
@@ -96,6 +101,7 @@ const HomePage = () => {
       <br />
       <small>{explanation}</small>
       <br />
+      <b>People In Space: </b>
       <PeopleInSpace />
       <br />
       <CreatePost setPost={setPosts} posts={posts} fetchPosts = {fetchPosts} />
@@ -105,7 +111,7 @@ const HomePage = () => {
             <div className="post" key={id}>
             {!token && 
           <ul>
-              <li>Username: {post.user}</li>
+              <li>Username: {post.user.username}</li>
               <li>Post: {post.text}</li>
               <li>Likes {post.likes}</li>
               <li>Dislikes {post.dislikes}</li>
@@ -114,13 +120,10 @@ const HomePage = () => {
             }
             {token &&
           <ul>
-              <li>Username: {post.user}</li>
+              <li>Username: {post.user.username}</li>
               <li>Post: {post.text}</li>
-              <a onClick={() => commentsOnPost(post.id)}>comments<Routes>
-                {console.log("postID: ", postId)}
-                <Route path="/comments" element={<CommentsPage  cash="Test" postId={postId}/>} />
-              </Routes></a>
-              {/* <a onClick={() => navigate("/comments")}>comments</a> */}
+              {/* <Link to='/comments' postId={{ postId }}>Comments</Link> */}
+              <button onClick={() => <CommentsPage postId={postId} />} >Comments</button>
               <ToggleButton />
               <button onClick={() => getId(post.id)}>Edit</button>
               <button onClick={()=> postDelete(post.id)}>DELETE</button>
