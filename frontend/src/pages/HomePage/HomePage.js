@@ -94,7 +94,9 @@ const HomePage = () => {
       <small><b>Description:</b></small>
       <br />
       <small>{explanation}</small>
-      {/* <PeopleInSpace /> */}
+      <br />
+      <PeopleInSpace />
+      <br />
       <CreatePost setPost={setPosts} posts={posts} fetchPosts = {fetchPosts} />
       <EditPost postId={postId} fetchPosts = {fetchPosts}/>
       <>{[...posts].reverse().map((post, id) => {

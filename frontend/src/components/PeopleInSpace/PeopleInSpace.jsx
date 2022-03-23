@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const PeopleInSpace = () => {
 
-    const[people, setPeople] = useState()
+    const[people, setPeople] = useState([])
     
     useEffect(() => {
         personsInSpace();
@@ -11,7 +11,8 @@ const PeopleInSpace = () => {
 
     async function personsInSpace(){
         let response = await axios.get("http://api.open-notify.org/astros.json")
-        setPeople(response.people)
+        console.log(response.data.people)
+        setPeople(response.data.people)
     }
 
     return ( 
