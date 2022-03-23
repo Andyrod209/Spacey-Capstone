@@ -130,5 +130,5 @@ dist
 .pnp.*
 
 # Api keys
-.API_keys.json
+.API_keys.json/HomePage/pages/src
 /src/pages/HomePage/API_Keys.json
