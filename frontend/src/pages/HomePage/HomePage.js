@@ -15,6 +15,7 @@ const HomePage = () => {
   const [posts, setPosts] = useState([{}]);
   const [postId, setPostId] = useState(Number);
   const [apod, setApod] = useState();
+  const [explanation, setExplanation] = useState();
 
   const fetchPosts = async () => {
     try {

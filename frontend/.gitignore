@@ -131,3 +131,4 @@ dist
 
 # Api keys
 .API_keys.json
+\src\pages\HomePage\API_Keys.json
