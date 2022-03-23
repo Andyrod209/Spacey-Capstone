@@ -40,6 +40,7 @@ const ToggleButton = () => {
             <button className={like} type='button' onClick={handleLikeClick}>
                 <i onclick={() => thumbsUpOrDown(this)} className="fa fa-thumbs-up"></i>
             </button> 
+            
             <button className={dislike} type='button' onClick={handleDislikeClick}>
                 <i onclick={() => thumbsUpOrDown(this)} className="fa fa-thumbs-down"></i>
             </button>

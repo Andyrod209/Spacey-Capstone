@@ -7,6 +7,8 @@ import CreatePost from "../../components/CreatePost/CreatePost";
 import EditPost from "../../components/EditPost/EditPost";
 import keys from "./API_Keys.json"
 import ToggleButton from "../../components/ToggleButton/ToggleButton";
+import { useNavigate } from "react-router-dom";
+import PeopleInSpace from "../../components/PeopleInSpace/PeopleInSpace";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -15,7 +17,9 @@ const HomePage = () => {
   const [posts, setPosts] = useState([{}]);
   const [postId, setPostId] = useState(Number);
   const [apod, setApod] = useState();
+  const [title, setTitle] = useState();
   const [explanation, setExplanation] = useState();
+
 
   const fetchPosts = async () => {
     try {
@@ -42,8 +46,8 @@ const HomePage = () => {
     console.log(response)
   } catch (error) {
     console.log(error.response);
-}
-};
+  }
+  };
 
   // increnment = () => {
   //   let newcount = 
@@ -66,14 +70,31 @@ const HomePage = () => {
     
     async function getAPOD(){
       let response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${keys.NasaApiKey}`)
-      console.log(response)
       setApod(response.data.url)
+      setExplanation(response.data.explanation)
+      setTitle(response.data.title)
+
     }
+
+    const navigate = useNavigate();
+    // figure out how to get a post id to the comments page
+    // ask about your APIkey
+    // try to fix toggle button 
+    // gotta do some design work
+    // get and grind!!!!
  
   return (
     <div className="container">
       <h1>Home Page for test</h1>
       <img src={apod} alt='Picture of the day'/>
+
+      <small><b>Title: </b></small>
+      <small>{title}</small>
+      <br/>
+      <small><b>Description:</b></small>
+      <br />
+      <small>{explanation}</small>
+      {/* <PeopleInSpace /> */}
       <CreatePost setPost={setPosts} posts={posts} fetchPosts = {fetchPosts} />
       <EditPost postId={postId} fetchPosts = {fetchPosts}/>
       <>{[...posts].reverse().map((post, id) => {
@@ -86,12 +107,13 @@ const HomePage = () => {
               <li>Likes {post.likes}</li>
               <li>Dislikes {post.dislikes}</li>
           </ul>
+          
             }
             {token &&
           <ul>
               <li>Username: {post.user}</li>
               <li>Post: {post.text}</li>
-              
+              <a onClick={() => navigate("/comments")}>comments</a>
               <ToggleButton />
               <button onClick={() => getId(post.id)}>Edit</button>
               <button onClick={()=> postDelete(post.id)}>DELETE</button>
