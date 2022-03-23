@@ -1,22 +1,21 @@
 import axios from "axios";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react"
 
-const CommentsPage = () => {
+const CommentsPage = (props) => {
     // use a get request to get the information and some how get just that single post
         // and have comments under the post 
     // this will be a new page
     const [comments, setComments] =useState();
-
+    console.log("props.postId: ", props.postId)
+    console.log("All Props: ", props)
     async function getComments(){
-       let response = await axios.get(`http://127.0.0.1:8000/api/comments/all/1/`)
+       let response = await axios.get(`http://127.0.0.1:8000/api/comments/all/${props.postId}/`)
+       console.log(response)
     }
-    
-    const navigate = useNavigate();
 
     return ( 
         <div>
-            <a onClick={() => navigate("/comments")}>comments</a>
+            <h1>comments</h1>
         </div>
      );
 }

@@ -9,6 +9,9 @@ import keys from "./API_Keys.json"
 import ToggleButton from "../../components/ToggleButton/ToggleButton";
 import { useNavigate } from "react-router-dom";
 import PeopleInSpace from "../../components/PeopleInSpace/PeopleInSpace";
+import CommentsPage from "../CommentsPage/CommentsPage";
+import { Routes, Route } from "react-router-dom";
+// import { useLocation } from "react-router-dom";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -19,7 +22,7 @@ const HomePage = () => {
   const [apod, setApod] = useState();
   const [title, setTitle] = useState();
   const [explanation, setExplanation] = useState();
-
+  // const location = useLocation();
 
   const fetchPosts = async () => {
     try {
@@ -62,27 +65,25 @@ const HomePage = () => {
   //     await fetchPosts();
   //     console.log(response.data);
   // }
+  async function getAPOD(){
+    let response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${keys.NasaApiKey}`)
+    setApod(response.data.url)
+    setExplanation(response.data.explanation)
+    setTitle(response.data.title)
+  }
   
   let getId = (id) => {
     setPostId(id)
     console.log(id)
     };
     
-    async function getAPOD(){
-      let response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${keys.NasaApiKey}`)
-      setApod(response.data.url)
-      setExplanation(response.data.explanation)
-      setTitle(response.data.title)
-
-    }
-
     const navigate = useNavigate();
-    // figure out how to get a post id to the comments page
-    // ask about your APIkey
-    // try to fix toggle button 
-    // gotta do some design work
-    // get and grind!!!!
- 
+
+    function commentsOnPost(id){
+      getId(id)
+      navigate('/comments')
+    }
+  
   return (
     <div className="container">
       <h1>Home Page for test</h1>
@@ -115,7 +116,11 @@ const HomePage = () => {
           <ul>
               <li>Username: {post.user}</li>
               <li>Post: {post.text}</li>
-              <a onClick={() => navigate("/comments")}>comments</a>
+              <a onClick={() => commentsOnPost(post.id)}>comments<Routes>
+                {console.log("postID: ", postId)}
+                <Route path="/comments" element={<CommentsPage  cash="Test" postId={postId}/>} />
+              </Routes></a>
+              {/* <a onClick={() => navigate("/comments")}>comments</a> */}
               <ToggleButton />
               <button onClick={() => getId(post.id)}>Edit</button>
               <button onClick={()=> postDelete(post.id)}>DELETE</button>
