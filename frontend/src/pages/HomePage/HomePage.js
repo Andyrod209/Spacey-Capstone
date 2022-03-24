@@ -10,8 +10,8 @@ import ToggleButton from "../../components/ToggleButton/ToggleButton";
 import { useNavigate } from "react-router-dom";
 import PeopleInSpace from "../../components/PeopleInSpace/PeopleInSpace";
 import Comments from "../../components/Comments/Comments";
-// import { Routes, Route, Link } from "react-router-dom";
-// import { useLocation } from "react-router-dom";
+import { MDBBtn } from 'mdb-react-ui-kit';
+import {Card, Button} from 'react-bootstrap'
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -37,8 +37,7 @@ const HomePage = () => {
   useEffect(() => {
     fetchPosts();
     getAPOD();
-    // comments();
-  }, [token]);
+  }, []);
 
   async function postDelete(id){
     try {
@@ -52,19 +51,6 @@ const HomePage = () => {
   }
   };
 
-  // increnment = () => {
-  //   let newcount = 
-  //   let post = {
-  //     "user": user.user_id,
-  //     "text": postInfo,
-  //     "likes": 0,
-  //     "dislikes": 0
-  // };
-  // let response = await axios.put(`http://127.0.0.1:8000/api/posts/edit/${postId}/`, post,
-  //   { headers: {Authorization: 'Bearer ' + token,}}); 
-  //     await fetchPosts();
-  //     console.log(response.data);
-  // }
   async function getAPOD(){
     let response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${keys.NasaApiKey}`)
     setApod(response.data.url)
@@ -81,26 +67,25 @@ const HomePage = () => {
 
     function commentsOnPost(id){
       getId(id)
-      navigate('/comments')
-    }
-
-    // function comments () {
-    //   const location = useLocation()
-    //   const { postId } = location.state
-    // }
+      navigate('/comments')}
   
   return (
     <div className="container">
-      
-      <h1>Home Page for test</h1>
-      <img src={apod} alt='Picture of the day'/>
-
-      <small><b>Title: </b></small>
-      <small>{title}</small>
-      <br/>
-      <small><b>Description:</b></small>
-      <br />
-      <small>{explanation}</small>
+      {!token &&
+        <h1>Welcome Guest!</h1>
+      }
+      {token &&
+        <h1>Welcome {user.username}!</h1>
+      }
+      <Card style={{ width: '35rem'  }}>
+        <Card.Img variant="top" src={apod} />
+      <Card.Body>
+    <Card.Title>{title}</Card.Title>
+        <Card.Text>
+        {explanation}
+        </Card.Text>
+      </Card.Body>
+    </Card>
       <br />
       <b>People In Space: </b>
       <PeopleInSpace />
@@ -109,31 +94,38 @@ const HomePage = () => {
       <EditPost postId={postId} fetchPosts = {fetchPosts}/>
       <>{[...posts].reverse().map((post, id) => {
         return (
-            <div className="post" key={id}>
+          <div className="post" key={id}>
             {!token && 
-          <ul>
-              <li>Username: {post.user.username}</li>
-              <li>Post: {post.text}</li>
-              <li>Likes {post.likes}</li>
-              <li>Dislikes {post.dislikes}</li>
-          </ul>
+            <ul>
+                <li>Username: {post.user.username}</li>
+                <li>Post: {post.text}</li>
+                <li>Likes {post.likes}</li>
+                <li>Dislikes {post.dislikes}</li>
+            </ul>
           
             }
             {token &&
-          <ul>
+            <ul>
               <li>Username: {post.user.username}</li>
               <li>Post: {post.text}</li>
               <Comments postId={post.id}/> 
               <ToggleButton />
-              <button onClick={() => getId(post.id)}>Edit</button>
-              <button onClick={()=> postDelete(post.id)}>DELETE</button>
-          </ul>
+              {/* this is a ternary statement for conditional rendering */}
+              {user.id === post.user.id && 
+                <><button onClick={() => getId(post.id)}>Edit</button>
+                <MDBBtn className='mx-2' color='danger' onClick={() => postDelete(post.id)}>DELETE</MDBBtn>
+                </>
+              }
+            </ul>
             }
           </div>
         )
       })}
       </>
     </div>
+
+
+   
   );
 };
 

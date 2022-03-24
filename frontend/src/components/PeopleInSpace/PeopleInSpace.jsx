@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Table from 'react-bootstrap/Table'
+import './PeopleInSpace.css'
 
 const PeopleInSpace = () => {
 
@@ -17,13 +19,23 @@ const PeopleInSpace = () => {
 
     return ( 
         <div>
+            <Table className="table" striped bordered hover variant="dark" size="sm">
+                    <thead>
+                      <tr>
+                        <th>Full Name</th>
+                        <th>Craft</th>
+                      </tr>
+                    </thead>
             {people.map((e) => {
                 return(
-                <ul>        
-                    <li><small>{e.name}</small></li>
-                    <li><small>{e.craft}</small></li>
-                </ul>
+                    <tbody>
+                      <tr>
+                        <td>{e.name}</td>
+                        <td>{e.craft}</td>
+                      </tr>
+                    </tbody>
             )})}
+            </Table>
         </div>
      );
 }

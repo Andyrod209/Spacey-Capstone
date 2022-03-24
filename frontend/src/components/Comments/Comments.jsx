@@ -30,13 +30,13 @@ const Comments = (props) => {
 
   return (
     <div>
-      <MDBBtn onClick={() => handleClick()}>LAUNCH DEMO MODAL</MDBBtn>
+      <MDBBtn onClick={() => handleClick()}>Comments</MDBBtn>
 
       <MDBModal show={scrollableModal} setShow={setScrollableModal} tabIndex='-1'>
         <MDBModalDialog scrollable>
           <MDBModalContent>
             <MDBModalHeader>
-              <MDBModalTitle>Modal title</MDBModalTitle>
+              <MDBModalTitle>Comments</MDBModalTitle>
               <MDBBtn
                 className='btn-close'
                 color='none'
@@ -54,7 +54,6 @@ const Comments = (props) => {
                   </div>
                 );
               })}
-              <p>comments</p>
             </MDBModalBody>
             <MDBModalFooter>
               <CommentsForum postId={props.postId} getComments={getComments}/>

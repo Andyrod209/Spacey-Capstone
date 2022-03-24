@@ -9,7 +9,7 @@ const CommentsForum = (props) => {
     
     const [user, token] = useAuth();
     const [commentText, setCommentText] = useState('');
-    console.log(commentText)
+    
     
     async function postComment(){
         let newComment = {
