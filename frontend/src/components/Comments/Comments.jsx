@@ -9,25 +9,28 @@ import { MDBBtn,
     MDBModalBody,
     MDBModalFooter,
   } from 'mdb-react-ui-kit';
+import CommentsForum from '../CommentsForum/CommentsForum';
 
 const Comments = (props) => {
 
     const [scrollableModal, setScrollableModal] = useState(false);
-    const [comments, setComments] = useState();
+    const [comments, setComments] = useState([]);
+    console.log(comments)
 
     async function getComments(){
         let response = await axios.get(`http://127.0.0.1:8000/api/comments/all/${props.postId}/`)
         console.log(response)
         setComments(response.data)
-        console.log(comments)
      }
 
-    useEffect(() => {
-        getComments();
-    }, [props.postId])
+    function handleClick(){
+      setScrollableModal(!scrollableModal)
+      getComments();
+    }
+
   return (
-    <>
-      <MDBBtn onClick={() => setScrollableModal(!scrollableModal)}>LAUNCH DEMO MODAL</MDBBtn>
+    <div>
+      <MDBBtn onClick={() => handleClick()}>LAUNCH DEMO MODAL</MDBBtn>
 
       <MDBModal show={scrollableModal} setShow={setScrollableModal} tabIndex='-1'>
         <MDBModalDialog scrollable>
@@ -41,19 +44,29 @@ const Comments = (props) => {
               ></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
+              {comments.map((comment, id) => {
+                return (
+                  <div className="form-grid">
+                    <div key={id} className="form-control" >
+                    <h4 className="form-heading">{comment.user.username}</h4>
+                    <div  className="post-content">{comment.text}</div>
+                  </div>
+                  </div>
+                );
+              })}
               <p>comments</p>
             </MDBModalBody>
             <MDBModalFooter>
-              <MDBBtn color='secondary' onClick={() => setScrollableModal(!setScrollableModal)}>
+              <CommentsForum postId={props.postId} getComments={getComments}/>
+              {/* <MDBBtn color='secondary' onClick={() => setScrollableModal(!setScrollableModal)}>
                 Close
-              </MDBBtn>
-              <MDBBtn>Save changes</MDBBtn>
+              </MDBBtn> */}
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
-      </MDBModal>
-    </>
-  );
+        </MDBModal>
+        </div>
+        );
 }
  
 export default Comments;
