@@ -1,6 +1,6 @@
 ul {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   list-style-type: none;
 }
 

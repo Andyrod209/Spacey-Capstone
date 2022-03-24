@@ -9,7 +9,7 @@ import keys from "./API_Keys.json"
 import ToggleButton from "../../components/ToggleButton/ToggleButton";
 import { useNavigate } from "react-router-dom";
 import PeopleInSpace from "../../components/PeopleInSpace/PeopleInSpace";
-import CommentsPage from "../CommentsPage/CommentsPage";
+import Comments from "../../components/Comments/Comments";
 // import { Routes, Route, Link } from "react-router-dom";
 // import { useLocation } from "react-router-dom";
 
@@ -91,6 +91,7 @@ const HomePage = () => {
   
   return (
     <div className="container">
+      
       <h1>Home Page for test</h1>
       <img src={apod} alt='Picture of the day'/>
 
@@ -122,8 +123,7 @@ const HomePage = () => {
           <ul>
               <li>Username: {post.user.username}</li>
               <li>Post: {post.text}</li>
-              {/* <Link to='/comments' postId={{ postId }}>Comments</Link> */}
-              <button onClick={() => <CommentsPage postId={postId} />} >Comments</button>
+              <Comments postId={post.id}/> 
               <ToggleButton />
               <button onClick={() => getId(post.id)}>Edit</button>
               <button onClick={()=> postDelete(post.id)}>DELETE</button>
