@@ -7,7 +7,7 @@ const Editpost = (props) => {
 
     const [user, token] = useAuth();
     const [postInfo, setPostInfo] = useState('');
-    
+    console.log(postInfo)
     useEffect(() => {
         const fetchPostsInfo = async () => {
         try {

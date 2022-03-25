@@ -31,11 +31,12 @@ const CommentsForum = (props) => {
     function handleSubmit(event){
         event.preventDefault();
         postComment();
+        setCommentText('');
     }
     
     return ( 
         <form onSubmit={handleSubmit}>
-            <MDBInput label='Comment' id='form1' type='text' onChange={(event) => setCommentText(event.target.value)}/>
+            <MDBInput label='Comment' id='form1' value={commentText} type='text' onChange={(event) => setCommentText(event.target.value)}/>
             <MDBBtn type='submit'>Post Comment</MDBBtn>
         </form> 
     );

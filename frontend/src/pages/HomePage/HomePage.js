@@ -37,7 +37,7 @@ const HomePage = () => {
   useEffect(() => {
     fetchPosts();
     getAPOD();
-  }, []);
+  }, [token]);
 
   async function postDelete(id){
     try {
@@ -67,9 +67,9 @@ const HomePage = () => {
       <>
     <div className="container">
         {!token &&
-          <h1 style={{margin:'1%'}}>Welcome Guest!</h1>}
+          <h1 style={{margin:'1%', color:'beige'}}>Welcome Guest!</h1>}
         {token &&
-          <h1 style={{margin:'1%'}}>Welcome {user.username}!</h1>}
+          <h1 style={{margin:'1%', color:'beige'}}>Welcome {user.username}!</h1>}
       <div className="APOD">
       <Card style={{ width: '35rem', marginLeft:'27.5%', backgroundColor:'black' }}>
       <Card.Img variant="top" src={apod} style={{ width: '35rem'}}/>
@@ -82,7 +82,7 @@ const HomePage = () => {
     </Card>
     </div>
         <br />
-        <b>People In Space: </b>
+        <b style={{color:'beige'}}>People In Space: </b>
         <PeopleInSpace />
         <br />
         <CreatePost setPost={setPosts} posts={posts} fetchPosts={fetchPosts} />

@@ -1,10 +1,21 @@
 import axios from "axios";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import { MDBBtn,
+    MDBModal,
+    MDBModalDialog,
+    MDBModalContent,
+    MDBModalHeader,
+    MDBModalTitle,
+    MDBModalBody,
+    MDBModalFooter,
+  } from 'mdb-react-ui-kit';
 
 const CreatePost = (props) => {
     const [user, token] = useAuth();
-    const [text , setText] = useState();
+    const [text , setText] = useState('');
+    const [basicModal, setBasicModal] = useState(false);
+    const toggleShow = () => setBasicModal(!basicModal);
     
     async function createPost() {
         try {
@@ -24,19 +35,43 @@ const CreatePost = (props) => {
             console.log(error.response);
         }
     };
+
+    const restText = () => {
+        setText('')
+    }
     
     function handleSubmit(event){
         event.preventDefault();
-        createPost()
+        createPost();
+        toggleShow();
+        restText();
         
     }
 
     
     return ( 
-        <form onSubmit={handleSubmit}>
-            <input type='text' placeholder="Say Something!" onChange={(event) => setText(event.target.value)} />
-            <button >Post</button>
-        </form>
+        <>
+            <MDBBtn onClick={toggleShow}>Post</MDBBtn>
+            <MDBModal show={basicModal} setShow={setBasicModal} tabIndex='-1'>
+            <MDBModalDialog>
+                <MDBModalContent>
+                <MDBModalHeader>
+                    <MDBModalTitle>Post</MDBModalTitle>
+                    <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
+                </MDBModalHeader>
+                <MDBModalBody>
+                <input type='text' value={text} placeholder="Say Something!" onChange={(event) => setText(event.target.value)} />
+                </MDBModalBody>
+
+                <MDBModalFooter>
+                    <MDBBtn color='secondary' onClick={(event) => handleSubmit(event)}>
+                    Post
+                    </MDBBtn>
+                </MDBModalFooter>
+                </MDBModalContent>
+            </MDBModalDialog>
+            </MDBModal>
+        </>
      );
 }
  
