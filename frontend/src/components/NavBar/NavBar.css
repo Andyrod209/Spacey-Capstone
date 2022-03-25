@@ -1,14 +1,15 @@
 ul.navul {
   display: flex;
-  /* justify-content: space-between; */
+  justify-content: space-between;
   list-style-type: none;
 }
 
 .navBar {
-  background: rgb(19, 35, 48);
+  background: rgb(0, 0, 0);
   box-shadow: 4px 2px 5px gray;
   color: white;
   padding: 1.5rem 2rem;
+  
 }
 
 .navBar button {

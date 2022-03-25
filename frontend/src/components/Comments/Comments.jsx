@@ -30,7 +30,7 @@ const Comments = (props) => {
 
   return (
     <>
-      <MDBBtn onClick={() => handleClick()}>Comments</MDBBtn>
+      <MDBBtn onClick={() => handleClick()} style={{marginRight:'.5%'}}>Comments</MDBBtn>
 
       <MDBModal show={scrollableModal} setShow={setScrollableModal} tabIndex='-1'>
         <MDBModalDialog scrollable>

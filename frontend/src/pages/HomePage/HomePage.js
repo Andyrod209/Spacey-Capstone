@@ -66,21 +66,21 @@ const HomePage = () => {
   return (
       <>
     <div className="container">
+        {!token &&
+          <h1 style={{margin:'1%'}}>Welcome Guest!</h1>}
+        {token &&
+          <h1 style={{margin:'1%'}}>Welcome {user.username}!</h1>}
       <div className="APOD">
-      <Card style={{ width: '35rem' }}>
+      <Card style={{ width: '35rem', marginLeft:'27.5%', backgroundColor:'black' }}>
       <Card.Img variant="top" src={apod} style={{ width: '35rem'}}/>
-      <Card.Body>
-        <Card.Title>{title}</Card.Title>
-        <Card.Text>
+      <Card.Body style={{ backgroundColor:'black' }}>
+        <Card.Title style={{color:'beige'}}>{title}</Card.Title>
+        <Card.Text style={{color:'beige'}}>
           {explanation}
         </Card.Text>
       </Card.Body>
     </Card>
     </div>
-        {!token &&
-          <h1>Welcome Guest!</h1>}
-        {token &&
-          <h1>Welcome {user.username}!</h1>}
         <br />
         <b>People In Space: </b>
         <PeopleInSpace />
@@ -111,8 +111,8 @@ const HomePage = () => {
                   <ToggleButton />
                   {/* this is a ternary statement for conditional rendering */}
                   {user.id === post.user.id &&
-                      <><Button variant="link" onClick={() => getId(post.id)}>Edit</Button>
-                      <MDBBtn className='mx-2' color='danger' onClick={() => postDelete(post.id)}>DELETE</MDBBtn></>
+                      <><Button variant="link" onClick={() => getId(post.id)} style={{ position:'relative', left:'50%' }}>Edit</Button>
+                      <MDBBtn className='mx-2' color='danger' onClick={() => postDelete(post.id)} style={{ position:'relative', left:'50%' }}>DELETE</MDBBtn></>
                     }
                     </div>
                 </ul>}

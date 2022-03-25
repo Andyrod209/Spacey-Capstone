@@ -10,13 +10,12 @@ const Navbar = () => {
   return (
     <div className="navBar">
       <ul className="navul">
+        <li><button onClick={() => navigate("/profile")}>Profile</button></li>
         <li className="brand">
           <Link to="/" style={{ textDecoration: "none", color: "white", textAlign: "center" }}>
             <b>Spacey</b>
           </Link>
         </li>
-        <li><button>Post</button></li>
-        <li><button onClick={() => navigate("/profile")}>Profile</button></li>
         <li>
           {user ? (
             <button onClick={logoutUser}>Logout</button>
