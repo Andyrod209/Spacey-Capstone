@@ -1,3 +1,7 @@
+.toggleButton {
+    flex-direction: row;
+    justify-content: center;
+}
 .like {
     background-color: rgba(0, 116, 6, 0.904);
 }

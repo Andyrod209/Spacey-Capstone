@@ -2,6 +2,7 @@ import React, { useContext, useEffect } from "react";
 import AuthContext from "../../context/AuthContext";
 import useCustomForm from "../../hooks/useCustomForm";
 import { Link } from "react-router-dom";
+import Button from 'react-bootstrap/Button'
 import "./LoginPage.css";
 
 const LoginPage = () => {
@@ -19,7 +20,7 @@ const LoginPage = () => {
   }, [isServerError]);
 
   return (
-    <div className="container">
+    <div className="forum">
       <form className="form" onSubmit={handleSubmit}>
         <label>
           Username:{" "}

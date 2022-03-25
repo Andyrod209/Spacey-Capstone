@@ -62,67 +62,66 @@ const HomePage = () => {
     setPostId(id)
     console.log(id)
     };
-    
-    const navigate = useNavigate();
 
-    function commentsOnPost(id){
-      getId(id)
-      navigate('/comments')}
-  
   return (
+      <>
     <div className="container">
-      {!token &&
-        <h1>Welcome Guest!</h1>
-      }
-      {token &&
-        <h1>Welcome {user.username}!</h1>
-      }
-      <Card style={{ width: '35rem'  }}>
-        <Card.Img variant="top" src={apod} />
+      <div className="APOD">
+      <Card style={{ width: '35rem' }}>
+      <Card.Img variant="top" src={apod} style={{ width: '35rem'}}/>
       <Card.Body>
-    <Card.Title>{title}</Card.Title>
+        <Card.Title>{title}</Card.Title>
         <Card.Text>
-        {explanation}
+          {explanation}
         </Card.Text>
       </Card.Body>
     </Card>
-      <br />
-      <b>People In Space: </b>
-      <PeopleInSpace />
-      <br />
-      <CreatePost setPost={setPosts} posts={posts} fetchPosts = {fetchPosts} />
-      <EditPost postId={postId} fetchPosts = {fetchPosts}/>
-      <>{[...posts].reverse().map((post, id) => {
-        return (
-          <div className="post" key={id}>
-            {!token && 
-            <ul>
-                <li>Username: {post.user.username}</li>
-                <li>Post: {post.text}</li>
-                <li>Likes {post.likes}</li>
-                <li>Dislikes {post.dislikes}</li>
-            </ul>
-          
-            }
-            {token &&
-            <ul>
-              <li>Username: {post.user.username}</li>
-              <li>Post: {post.text}</li>
-              <Comments postId={post.id}/> 
-              <ToggleButton />
-              {/* this is a ternary statement for conditional rendering */}
-              {user.id === post.user.id && 
-                <><button onClick={() => getId(post.id)}>Edit</button>
-                <MDBBtn className='mx-2' color='danger' onClick={() => postDelete(post.id)}>DELETE</MDBBtn>
-                </>
-              }
-            </ul>
-            }
-          </div>
-        )
-      })}
-      </>
     </div>
+        {!token &&
+          <h1>Welcome Guest!</h1>}
+        {token &&
+          <h1>Welcome {user.username}!</h1>}
+        <br />
+        <b>People In Space: </b>
+        <PeopleInSpace />
+        <br />
+        <CreatePost setPost={setPosts} posts={posts} fetchPosts={fetchPosts} />
+        <EditPost postId={postId} fetchPosts={fetchPosts} />
+        <>{[...posts].reverse().map((post, id) => {
+          return (
+            <div className="post" key={id}>
+              {!token &&
+                <ul>
+                  <li>Username: {post.user.username}</li>
+                  <li>Post: {post.text}</li>
+                  <li>Likes {post.likes}</li>
+                  <li>Dislikes {post.dislikes}</li>
+                </ul>}
+              {token &&
+                <ul>
+                  <div className="username">
+                  <li>{post.user.username}</li>
+                  </div>
+                  <div className="text">
+                  <p><b>Post:</b> {post.text}</p>
+                  </div>
+      
+                  <div className="userOptions">
+                  <Comments postId={post.id} />
+                  <ToggleButton />
+                  {/* this is a ternary statement for conditional rendering */}
+                  {user.id === post.user.id &&
+                      <><Button variant="link" onClick={() => getId(post.id)}>Edit</Button>
+                      <MDBBtn className='mx-2' color='danger' onClick={() => postDelete(post.id)}>DELETE</MDBBtn></>
+                    }
+                    </div>
+                </ul>}
+            </div>
+          );
+        })}
+        </>
+      </div>
+      </>
 
 
    

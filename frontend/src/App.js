@@ -20,6 +20,7 @@ function App() {
   return (
     <div>
       <Navbar />
+      <div className="main" style={{ backgroundImage: "url(/img/alexander-andrews-fsH1KjbdjE8-unsplash.png)" }}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/profile" element={<ProfilePage />} />
@@ -27,6 +28,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
       </Routes>
       <Footer />
+      </div>
     </div>
   );
 }

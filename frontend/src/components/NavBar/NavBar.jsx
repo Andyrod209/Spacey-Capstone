@@ -9,7 +9,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   return (
     <div className="navBar">
-      <ul>
+      <ul className="navul">
         <li className="brand">
           <Link to="/" style={{ textDecoration: "none", color: "white", textAlign: "center" }}>
             <b>Spacey</b>

@@ -29,7 +29,7 @@ const Comments = (props) => {
     }
 
   return (
-    <div>
+    <>
       <MDBBtn onClick={() => handleClick()}>Comments</MDBBtn>
 
       <MDBModal show={scrollableModal} setShow={setScrollableModal} tabIndex='-1'>
@@ -64,7 +64,7 @@ const Comments = (props) => {
           </MDBModalContent>
         </MDBModalDialog>
         </MDBModal>
-        </div>
+        </>
         );
 }
  
