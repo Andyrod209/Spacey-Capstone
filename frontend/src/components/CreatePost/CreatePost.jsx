@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import './CreatePost.css'
 import { MDBBtn,
     MDBModal,
     MDBModalDialog,
@@ -60,7 +61,9 @@ const CreatePost = (props) => {
                     <MDBBtn className='btn-close' color='none' onClick={toggleShow}></MDBBtn>
                 </MDBModalHeader>
                 <MDBModalBody>
-                <input type='text' value={text} placeholder="Say Something!" onChange={(event) => setText(event.target.value)} />
+            <div className="grow-wrap">
+                <textarea type='text' value={text} placeholder="Say Something!" onChange={(event) => setText(event.target.value)} ></textarea>
+                </div>
                 </MDBModalBody>
 
                 <MDBModalFooter>
