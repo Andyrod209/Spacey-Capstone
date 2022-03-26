@@ -36,16 +36,12 @@ const CreatePost = (props) => {
             console.log(error.response);
         }
     };
-
-    const restText = () => {
-        setText('')
-    }
     
     function handleSubmit(event){
         event.preventDefault();
         createPost();
         toggleShow();
-        restText();
+        setText('')
         
     }
 

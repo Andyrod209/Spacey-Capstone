@@ -15,7 +15,6 @@ const Comments = (props) => {
 
     const [scrollableModal, setScrollableModal] = useState(false);
     const [comments, setComments] = useState([]);
-    console.log(comments)
 
     async function getComments(){
         let response = await axios.get(`http://127.0.0.1:8000/api/comments/all/${props.postId}/`)

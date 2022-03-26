@@ -11,14 +11,13 @@ import { useNavigate } from "react-router-dom";
 import PeopleInSpace from "../../components/PeopleInSpace/PeopleInSpace";
 import Comments from "../../components/Comments/Comments";
 import { MDBBtn } from 'mdb-react-ui-kit';
-import {Card, Button} from 'react-bootstrap'
+import {Card} from 'react-bootstrap'
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
   // The "token" value is the JWT token that you will send in the header of any request requiring authentication
   const [user, token] = useAuth();
   const [posts, setPosts] = useState([]);
-  const [postId, setPostId] = useState(Number);
   const [apod, setApod] = useState();
   const [title, setTitle] = useState();
   const [explanation, setExplanation] = useState();
@@ -57,11 +56,6 @@ const HomePage = () => {
     setExplanation(response.data.explanation)
     setTitle(response.data.title)
   }
-  
-  let getId = (id) => {
-    setPostId(id)
-    console.log(id)
-    };
 
   return (
       <>
@@ -86,7 +80,6 @@ const HomePage = () => {
         <PeopleInSpace />
         <br />
         <CreatePost setPost={setPosts} posts={posts} fetchPosts={fetchPosts} />
-        <EditPost postId={postId} fetchPosts={fetchPosts} />
         <>{[...posts].reverse().map((post, id) => {
           return (
             <div className="post" key={id}>
@@ -111,7 +104,7 @@ const HomePage = () => {
                   <ToggleButton />
                   {/* this is a ternary statement for conditional rendering */}
                   {user.id === post.user.id &&
-                      <><Button variant="link" onClick={() => getId(post.id)} style={{ position:'relative', left:'50%' }}>Edit</Button>
+                      <><EditPost postId={post.id} text={post.text} fetchPosts={fetchPosts} />
                       <MDBBtn className='mx-2' color='danger' onClick={() => postDelete(post.id)} style={{ position:'relative', left:'50%' }}>DELETE</MDBBtn></>
                     }
                     </div>

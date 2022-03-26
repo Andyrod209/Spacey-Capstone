@@ -1,33 +1,20 @@
 import axios from "axios";
 import { useState, useEffect} from "react";
 import useAuth from "../../hooks/useAuth";
+import Button from 'react-bootstrap/Button'
 
 
 const Editpost = (props) => {
 
     const [user, token] = useAuth();
-    const [postInfo, setPostInfo] = useState('');
-    useEffect(() => {
-        const fetchPostsInfo = async () => {
-        try {
-        let response = await axios.get(`http://127.0.0.1:8000/api/posts/edit/${props.postId}/`, { 
-            headers: 
-                {Authorization: 'Bearer ' + token,}
-                });
-                await props.fetchPosts();
-            setPostInfo(response.data.text)
-            console.log(response)
-        } catch(error) {
-          console.log(error.message);
-        }
-    };
-    fetchPostsInfo();
-    }, [token]);
+    const [text, setText] = useState(props.text);
+    const [editPost, setEditPost] = useState(false)
     
     async function postEdit(){
         let post = {
+            "id": props.postId,
             "user": user.user_id,
-            "text": postInfo,
+            "text": text,
             "likes": 0,
             "dislikes": 0
         };
@@ -44,15 +31,19 @@ const Editpost = (props) => {
     function handleSubmit(event){
         event.preventDefault();
         postEdit();
+        setEditPost(false)
     }
     
     return ( 
+        <>
+        {editPost &&
         <form onSubmit={handleSubmit}>
-            <label>Post Id: {props.postId}</label>
-            <input type="textbox" placeholder={postInfo} onChange={(event) => setPostInfo(event.target.value)}/>
+            <input type="textbox" placeholder={text} onChange={(event) => setText(event.target.value)}/>
             <button type="submit">Submit</button>
-
         </form>
+        }
+            <Button variant="link" onClick={() => setEditPost(true)} style={{ position:'relative', left:'50%' }}>Edit</Button>
+        </>
      );
 }
  
