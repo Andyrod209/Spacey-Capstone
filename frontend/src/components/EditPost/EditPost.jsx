@@ -25,7 +25,6 @@ const Editpost = (props) => {
                 }); 
                 await props.fetchPosts();
             console.log(response.data);
-            
     }
 
     function handleSubmit(event){

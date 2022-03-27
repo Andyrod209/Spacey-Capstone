@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from "axios";
 import { MDBBtn,
     MDBModal,
@@ -10,6 +10,7 @@ import { MDBBtn,
     MDBModalFooter,
   } from 'mdb-react-ui-kit';
 import CommentsForum from '../CommentsForum/CommentsForum';
+import LikeOrDislikeComment from '../LikeOrDislikeComment/LikeOrDislikeComment';
 
 const Comments = (props) => {
 
@@ -48,7 +49,16 @@ const Comments = (props) => {
                   <div className="form-grid">
                     <div key={id} className="form-control" >
                     <h4 className="form-heading">{comment.user.username}</h4>
-                    <div  className="post-content">{comment.text}</div>
+                    <div  className="post-content">{comment.text} 
+                    <LikeOrDislikeComment 
+                      getComments={getComments} 
+                      commentId={comment.id}
+                      commentUsername={comment.user.username}
+                      commentUserId={comment.user.id} 
+                      postId={props.postId} 
+                      commentText={comment.text}
+                      likes={comment.likes}
+                      dislikes={comment.dislikes}/> </div>
                   </div>
                   </div>
                 );
