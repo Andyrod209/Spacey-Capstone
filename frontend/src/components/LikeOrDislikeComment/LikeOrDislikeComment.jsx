@@ -5,10 +5,14 @@ import useAuth from "../../hooks/useAuth";
 const LikeOrDislikeComment = (props) => {
 
     const [user, token] = useAuth();
-    const [likes, setLikes] = useState(Number);
-    const [dislikes, setDislikes] = useState(Number);
+    const [likes, setLikes] = useState(props.likes);
+    const [dislikes, setDislikes] = useState(props.dislikes);
     
+    const [likeActive, setLikeActive] = useState(false);
+    const [dislikeActive, setDislikeActive] = useState(false);
+
     async function ChangeComment(){
+        try {
         let comment = {
             "user": props.commentUsername,
             "post": props.postId,
@@ -16,7 +20,6 @@ const LikeOrDislikeComment = (props) => {
             "likes": likes,
             "dislikes": dislikes
         }
-        try {
             let response = await axios.put(`http://127.0.0.1:8000/api/comments/edit/${props.commentId}/`, comment , 
             { headers: {Authorization: 'Bearer ' + token}}); 
                 console.log(response.data);
@@ -27,11 +30,33 @@ const LikeOrDislikeComment = (props) => {
     }
 
     const giveLike = () => {
-        setLikes(likes + 1);
+        if(likeActive){
+            setLikeActive(false);
+            setLikes(likes - 1);
+        } else {
+            setLikeActive(true);
+            setLikes(likes + 1);
+            if(dislikeActive){
+                setDislikeActive(false);
+                setLikes(likes + 1);
+                setDislikes(dislikes - 1);
+            }
+        }
         ChangeComment();
     }
     const giveDislike = () => {
-        setDislikes(likes + 1);
+        if(dislikeActive){
+            setDislikeActive(false);
+            setDislikes(dislikes - 1);
+        } else {
+            setDislikeActive(true);
+            setDislikes(dislikes + 1);
+            if(likeActive){
+                setLikeActive(false);
+                setDislikes(dislikes + 1);
+                setLikes(likes - 1);
+            }
+        }
         ChangeComment();
     }
 
