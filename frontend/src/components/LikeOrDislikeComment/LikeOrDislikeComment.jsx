@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 
@@ -28,6 +28,10 @@ const LikeOrDislikeComment = (props) => {
             console.log(error.response);
         }
     }
+    
+    useEffect(() => {
+        ChangeComment();
+      }, [likes, dislikes]);
 
     function giveLike(){
         if(likeActive){
@@ -42,7 +46,7 @@ const LikeOrDislikeComment = (props) => {
                 setDislikes(dislikes - 1);
             }
         }
-        ChangeComment();
+        props.getComments();
     }
     function giveDislike() {
         if(dislikeActive){
@@ -57,7 +61,7 @@ const LikeOrDislikeComment = (props) => {
                 setLikes(likes - 1);
             }
         }
-        ChangeComment();
+        props.getComments();
     }
 
     return ( 
