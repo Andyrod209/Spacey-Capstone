@@ -29,7 +29,7 @@ const LikeOrDislikeComment = (props) => {
         }
     }
 
-    const giveLike = () => {
+    function giveLike(){
         if(likeActive){
             setLikeActive(false);
             setLikes(likes - 1);
@@ -44,7 +44,7 @@ const LikeOrDislikeComment = (props) => {
         }
         ChangeComment();
     }
-    const giveDislike = () => {
+    function giveDislike() {
         if(dislikeActive){
             setDislikeActive(false);
             setDislikes(dislikes - 1);
@@ -62,8 +62,8 @@ const LikeOrDislikeComment = (props) => {
 
     return ( 
     <div>
-        <button onClick={giveLike}>{props.likes} Like</button>
-        <button onClick={giveDislike}>{props.dislikes} Dislike</button>
+        <button onClick={() => giveLike()}>{props.likes} Like</button>
+        <button onClick={() => giveDislike()}>{props.dislikes} Dislike</button>
     </div> 
     );
 }
