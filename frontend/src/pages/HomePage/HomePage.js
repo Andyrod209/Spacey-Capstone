@@ -102,7 +102,12 @@ const HomePage = () => {
                   <div className="userOptions">
                   <Comments postId={post.id} />
                   <ToggleButton 
-                    likes={post.likes}/>
+                    fetchPosts={fetchPosts}
+                    likes={post.likes}
+                    dislikes={post.dislikes}
+                    postId={post.id}
+                    postUsername={post.user.username}
+                    postText={post.text}/>
                   {/* this is a ternary statement for conditional rendering */}
                   {user.id === post.user.id &&
                       <><EditPost postId={post.id} text={post.text} fetchPosts={fetchPosts} />
