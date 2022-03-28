@@ -85,15 +85,19 @@ const HomePage = () => {
             <div className="post" key={id}>
               {!token &&
                 <ul>
-                  <li>Username: {post.user.username}</li>
-                  <li>Post: {post.text}</li>
-                  <li>Likes {post.likes}</li>
-                  <li>Dislikes {post.dislikes}</li>
+                  <div className="username">
+                    <li>{post.user.username}</li>
+                  </div>
+                  <div className="text">
+                    <p><b>Post:</b> {post.text}</p>
+                  </div>
+                  <li style={{color:'beige'}}>Likes {post.likes}</li>
+                  <li style={{color:'beige'}}>Dislikes {post.dislikes}</li>
                 </ul>}
               {token &&
                 <ul>
                   <div className="username">
-                  <li>{post.user.username}</li>
+                    <li>{post.user.username}</li>
                   </div>
                   <div className="text">
                   <p><b>Post:</b> {post.text}</p>
