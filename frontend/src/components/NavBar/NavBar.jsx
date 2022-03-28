@@ -10,7 +10,11 @@ const Navbar = () => {
   return (
     <div className="navBar">
       <ul className="navul">
+      {user ? (
         <li><button onClick={() => navigate("/profile")}>Profile</button></li>
+      ) : (
+        <button onClick={() => navigate("/login")}>Profile</button>
+      )}
         <li className="brand">
           <Link to="/" style={{ textDecoration: "none", color: "white", textAlign: "center" }}>
             <b>Spacey</b>
