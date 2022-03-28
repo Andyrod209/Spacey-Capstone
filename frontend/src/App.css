@@ -24,8 +24,8 @@ p {
 
 button {
   background-color: transparent;
-  border: 2px solid rgb(0, 0, 0);
-  color: beige;
+  border: 2px solid rgb(248, 245, 245);
+  color: rgb(138, 138, 88);
   font-size: 1rem;
   font-family: inherit;
   max-width: 100px;
@@ -34,7 +34,7 @@ button {
 
 button:hover {
   cursor: pointer;
-  color: white;
+  color: rgb(34, 24, 24);
   background-color: rgb(63, 63, 50);
 }
 

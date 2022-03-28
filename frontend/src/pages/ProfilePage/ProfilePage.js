@@ -49,7 +49,7 @@ const ProfilePage = () => {
     return ( 
         <div className="container">
             <h1 style={{color:'beige'}}>{user.username}</h1>
-                <h3 style={{color:'beige'}}>Profile</h3>
+                <h3 style={{color:'beige'}}>{user.first_name}'s Profile</h3>
                 <img src="https://i.ibb.co/pdJfzx9/profile-picture.jpg" alt="profile-picture" border="0" />
             <h3 style={{color:'beige'}}>About Me :</h3>
                 <p style={{color:'beige'}}>{profiles.about}</p>
