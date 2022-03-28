@@ -76,7 +76,7 @@ const HomePage = () => {
     </Card>
     </div>
         <br />
-        <b style={{color:'beige'}}>People In Space: </b>
+        <h3><b style={{color:'beige'}}>People In Space: </b></h3>
         <PeopleInSpace />
         <br />
         {!token &&
