@@ -79,7 +79,12 @@ const HomePage = () => {
         <b style={{color:'beige'}}>People In Space: </b>
         <PeopleInSpace />
         <br />
+        {!token &&
+        <h3 style={{color:'beige'}}>Login to Post</h3>
+        }
+        {token&&
         <CreatePost setPost={setPosts} posts={posts} fetchPosts={fetchPosts} />
+        }
         <>{[...posts].reverse().map((post, id) => {
           return (
             <div className="post" key={id}>
