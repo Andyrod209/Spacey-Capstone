@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import AuthContext from "../../context/AuthContext";
 import useCustomForm from "../../hooks/useCustomForm";
+import Button from 'react-bootstrap/Button'
 
 const RegisterPage = () => {
   const { registerUser } = useContext(AuthContext);
@@ -17,7 +18,7 @@ const RegisterPage = () => {
   );
 
   return (
-    <div className="container">
+    <div className="forum">
       <form className="form" onSubmit={handleSubmit}>
         <label>
           Username:{" "}

@@ -1,0 +1,14 @@
+.toggleButton {
+  margin: 1%;
+}
+.like {
+    background-color: rgba(0, 116, 6, 0.904);
+}
+
+.normal {
+    background-color: white;
+}
+
+.dislike {
+    background-color: red;
+}

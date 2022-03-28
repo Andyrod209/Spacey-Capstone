@@ -1,19 +1,15 @@
-ul {
+ul.navul {
   display: flex;
   justify-content: space-between;
   list-style-type: none;
 }
 
-li {
-  font-size: 1.25rem;
-}
-
 .navBar {
-  background: steelblue;
+  background: rgb(0, 0, 0);
   box-shadow: 4px 2px 5px gray;
   color: white;
-  margin-bottom: 2rem;
   padding: 1.5rem 2rem;
+  
 }
 
 .navBar button {
@@ -24,7 +20,7 @@ li {
 }
 
 .navBar button:hover {
-  background: white;
+  background: rgb(255, 255, 255);
   color: steelblue;
   cursor: pointer;
 }
