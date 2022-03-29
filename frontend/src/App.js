@@ -14,6 +14,7 @@ import Footer from "./components/Footer/Footer";
 // Util Imports
 import PrivateRoute from "./utils/PrivateRoute";
 import ProfilePage from "./pages/ProfilePage/ProfilePage";
+import ClickedUserProfile from "./pages/ClickedUserProfile/ClickedUserProfile";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
       <div className="main" style={{ backgroundImage: "url(/img/alexander-andrews-fsH1KjbdjE8-unsplash.png)" }}>
       <Routes>
         <Route path="/" element={<HomePage />} />
+        <Route path="/clickedUser" element={<ClickedUserProfile />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<LoginPage />} />

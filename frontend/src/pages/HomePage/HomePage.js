@@ -11,6 +11,8 @@ import PeopleInSpace from "../../components/PeopleInSpace/PeopleInSpace";
 import Comments from "../../components/Comments/Comments";
 import { MDBBtn } from 'mdb-react-ui-kit';
 import {Card} from 'react-bootstrap'
+import { Link } from "react-router-dom";
+import ClickedUserProfile from "../ClickedUserProfile/ClickedUserProfile";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
@@ -55,6 +57,18 @@ const HomePage = () => {
     setExplanation(response.data.explanation)
     setTitle(response.data.title)
   }
+
+  const catchUsers= (username) =>{
+    return(
+      <>
+        <ClickedUserProfile username={username}/>
+      </>
+    )
+  }
+  // arrow function did not work ^^^^^^
+  // got undefined on console 
+  // maybe passing route you can pass it without having render on homepage
+  // to be tested when I return...
 
   return (
       <>
@@ -101,7 +115,7 @@ const HomePage = () => {
               {token &&
                 <ul>
                   <div className="username">
-                    <li>{post.user.username}</li>
+                    <li><Link to="/clickedUser" onClick={catchUsers(post.user.username)}>{post.user.username}</Link></li>
                   </div>
                   <div className="text">
                   <p><b>Post:</b>{post.text}</p>
