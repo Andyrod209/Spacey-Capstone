@@ -4,13 +4,14 @@ import useAuth from "../../hooks/useAuth";
 import "./ProfilePage.css"
 const ProfilePage = () => {
 
-    const [user, token] = useAuth()
-    const [profiles, setProfiles] = useState([])
-    const [profileChange, setProfileChange] = useState('')
-    console.log(profileChange)
+    const [user, token] = useAuth();
+    const [profiles, setProfiles] = useState([]);
+    const [aboutChange, setAboutChange] = useState('');
+    const [aboutText, setAboutText] = useState();
+    
     useEffect(() => {
         getProfile();
-    }, [token]);
+    }, [aboutText, aboutChange]);
 
     async function getProfile(){
         let response = await axios.get(`http://127.0.0.1:8000/api/profiles/edit/${user.id}/`, { headers: 
@@ -19,21 +20,21 @@ const ProfilePage = () => {
         setProfiles(response.data)
     }
     
-    // async function CreateAbout(){
-    //     let about = {
-    //         user: user.user_id,
-    //         about: profileChange 
-    //     };
-    //     let response = await axios.put(`http://127.0.0.1:8000/api/profiles/`, about, { headers: 
-    //     {Authorization: 'Bearer ' + token,},})
-    //     console.log(response) 
-    //     await getProfile()
-    // }
+    async function CreateAbout(){
+        let about = {
+            user: user.id,
+            about: aboutText 
+        };
+        let response = await axios.post(`http://127.0.0.1:8000/api/profiles/`, about, { headers: 
+        {Authorization: 'Bearer ' + token}})
+        console.log(response) 
+        await getProfile()
+    }
 
     async function editProfile(){
         let about = {
             user: user.id,
-            about: profileChange 
+            about: aboutChange 
         };
         let response = await axios.put(`http://127.0.0.1:8000/api/profiles/edit/${user.id}/`, about, { headers: 
         {Authorization: 'Bearer ' + token}})
@@ -45,6 +46,11 @@ const ProfilePage = () => {
         event.preventDefault();
         editProfile();
     }
+    
+    function handleCreateSubmit(event){
+        event.preventDefault();
+        CreateAbout();
+    }
 
     return ( 
         <div className="container">
@@ -53,13 +59,19 @@ const ProfilePage = () => {
                 <img src="https://i.ibb.co/pdJfzx9/profile-picture.jpg" alt="profile-picture" border="0" />
             <h3 style={{color:'beige'}}>About Me :</h3>
                 <p style={{color:'beige'}}>{profiles.about}</p>
-                <input type='textbox' onChange={(event) => setProfileChange(event.target.value)}/>
-                <button type="submit" onClick={handleSubmit}>Change</button>
+                {!profiles &&
+                    <><input type='textbox' onChange={(event) => setAboutText(event.target.value)}/>
+                    <button type="submit" onClick={handleCreateSubmit}>Create</button></>
+                }
+                {profiles &&
+                   <> <input type='textbox' onChange={(event) => setAboutChange(event.target.value)}/>
+                    <button type="submit" onClick={handleSubmit}>Change</button></>
+                }
                 <br/>
         <div className="listFlex">
         </div>
     </div>
      );
 }
- 
+//  find a way to inplument create and when it is created removed and left wit.
 export default ProfilePage;

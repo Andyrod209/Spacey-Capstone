@@ -7,7 +7,6 @@ import CreatePost from "../../components/CreatePost/CreatePost";
 import EditPost from "../../components/EditPost/EditPost";
 import keys from "./API_Keys.json"
 import ToggleButton from "../../components/ToggleButton/ToggleButton";
-import { useNavigate } from "react-router-dom";
 import PeopleInSpace from "../../components/PeopleInSpace/PeopleInSpace";
 import Comments from "../../components/Comments/Comments";
 import { MDBBtn } from 'mdb-react-ui-kit';
@@ -105,7 +104,7 @@ const HomePage = () => {
                     <li>{post.user.username}</li>
                   </div>
                   <div className="text">
-                  <p><b>Post:</b> {post.text}</p>
+                  <p><b>Post:</b>{post.text}</p>
                   </div>
       
                   <div className="userOptions">
