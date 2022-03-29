@@ -6,6 +6,7 @@ const ProfilePage = () => {
 
     const [user, token] = useAuth();
     const [profiles, setProfiles] = useState([]);
+    const [catchError, setCatchError] = useState();
     const [aboutChange, setAboutChange] = useState('');
     const [aboutText, setAboutText] = useState();
     
@@ -14,11 +15,14 @@ const ProfilePage = () => {
     }, [aboutText, aboutChange]);
 
     async function getProfile(){
-        let response = await axios.get(`http://127.0.0.1:8000/api/profiles/edit/${user.id}/`, { headers: 
-        {Authorization: 'Bearer ' + token,},
-        })
-        setProfiles(response.data)
-    }
+        try {
+            let response = await axios.get(`http://127.0.0.1:8000/api/profiles/edit/${user.id}/`, { headers: 
+            {Authorization: 'Bearer ' + token,},})
+            setProfiles(response.data)
+        } catch (error) {
+            setCatchError(error.response)
+        }
+        }
     
     async function CreateAbout(){
         let about = {
@@ -45,13 +49,14 @@ const ProfilePage = () => {
     function handleSubmit(event){
         event.preventDefault();
         editProfile();
+        setAboutChange('');
     }
     
     function handleCreateSubmit(event){
         event.preventDefault();
         CreateAbout();
     }
-
+    
     return ( 
         <div className="container">
             <h1 style={{color:'beige'}}>{user.username}</h1>
@@ -59,12 +64,11 @@ const ProfilePage = () => {
                 <img src="https://i.ibb.co/pdJfzx9/profile-picture.jpg" alt="profile-picture" border="0" />
             <h3 style={{color:'beige'}}>About Me :</h3>
                 <p style={{color:'beige'}}>{profiles.about}</p>
-                {!profiles &&
-                    <><input type='textbox' onChange={(event) => setAboutText(event.target.value)}/>
+                {catchError 
+                    ?<><input type='textbox' onChange={(event) => setAboutText(event.target.value)}/>
                     <button type="submit" onClick={handleCreateSubmit}>Create</button></>
-                }
-                {profiles &&
-                   <> <input type='textbox' onChange={(event) => setAboutChange(event.target.value)}/>
+            
+                    :<><input type='textbox' value={aboutChange} onChange={(event) => setAboutChange(event.target.value)}/>
                     <button type="submit" onClick={handleSubmit}>Change</button></>
                 }
                 <br/>
