@@ -6,6 +6,7 @@ const ClickedUserProfile = (props) => {
 
     const [modalToggle, setModalToggle] = useState(false);
     const [profiles, setProfiles] = useState([]);
+    const [userClicked, setUserClicked] = useState();
     
     const fetchProfiles = async () => {
         try {
@@ -14,23 +15,22 @@ const ClickedUserProfile = (props) => {
           console.log(data)
           setProfiles(data);
           
+          
         } catch (error) {
           console.log(error.message);
         }
     }
 
-    const getUserId = profiles.filter( id => {
-        return id.id === props.userId
-      });
+    useEffect(() => {
+        fetchProfiles();
+      }, []);
 
-    //   find a way to pass other users about me 
-    // use filter to search for usersId
-    // it will display on the modal below about me.
-      const handleClick = (e) =>{
-          e.preventDefault();
-          console.log('this works')
-          setModalToggle(true)
-          fetchProfiles();
+    const handleClick = (e) =>{
+        e.preventDefault();
+        setModalToggle(true)
+        fetchProfiles();
+        const getUserId = profiles.find(id => id.user === props.userId)
+        setUserClicked(getUserId.about)
       }
 
     return ( 
@@ -49,9 +49,11 @@ const ClickedUserProfile = (props) => {
                 <Modal.Body>
                     <img src='https://i.ibb.co/pdJfzx9/profile-picture.jpg'/>
                     <h3>About Me :</h3>
-                    
-                        <p>{profiles.about}</p>
-                </Modal.Body>
+                    {userClicked 
+                    ?<p>{userClicked}</p>
+                    :<p>Nothing about {props.username}</p>
+                    }   
+                    </Modal.Body>
             </Modal>
         </>
         </>
