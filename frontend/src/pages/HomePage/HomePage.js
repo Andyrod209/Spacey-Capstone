@@ -11,7 +11,6 @@ import PeopleInSpace from "../../components/PeopleInSpace/PeopleInSpace";
 import Comments from "../../components/Comments/Comments";
 import { MDBBtn } from 'mdb-react-ui-kit';
 import {Card} from 'react-bootstrap'
-import { Link } from "react-router-dom";
 import ClickedUserProfile from "../ClickedUserProfile/ClickedUserProfile";
 
 const HomePage = () => {
@@ -57,14 +56,7 @@ const HomePage = () => {
     setExplanation(response.data.explanation)
     setTitle(response.data.title)
   }
-
-  const catchUsers= (username) =>{
-    return(
-      <>
-        <ClickedUserProfile username={username}/>
-      </>
-    )
-  }
+  
   // arrow function did not work ^^^^^^
   // got undefined on console 
   // maybe passing route you can pass it without having render on homepage
@@ -79,7 +71,8 @@ const HomePage = () => {
           <h1 style={{margin:'1%', color:'beige'}}>Welcome {user.username}!</h1>}
       <div className="APOD">
       <Card style={{ width: '35rem', marginLeft:'27.5%', backgroundColor:'black' }}>
-      <Card.Img variant="top" src={apod} style={{ width: '35rem'}}/>
+        {/* Added iframe for a videos change of pictures don't end up looking normal or try to find a way to refactor some how */}
+      <iframe src={apod}><Card.Img variant="top" src={apod} style={{ width: '35rem'}}/></iframe>
       <Card.Body style={{ backgroundColor:'black' }}>
         <Card.Title style={{color:'beige'}}>{title}</Card.Title>
         <Card.Text style={{color:'beige'}}>
@@ -100,44 +93,46 @@ const HomePage = () => {
         }
         <>{[...posts].reverse().map((post, id) => {
           return (
-            <div className="post" key={id}>
-              {!token &&
-                <ul>
-                  <div className="username">
-                    <li>{post.user.username}</li>
-                  </div>
-                  <div className="text">
-                    <p><b>Post:</b> {post.text}</p>
-                  </div>
-                  <li style={{color:'beige'}}>Likes {post.likes}</li>
-                  <li style={{color:'beige'}}>Dislikes {post.dislikes}</li>
-                </ul>}
-              {token &&
-                <ul>
-                  <div className="username">
-                    <li><Link to="/clickedUser" onClick={catchUsers(post.user.username)}>{post.user.username}</Link></li>
-                  </div>
-                  <div className="text">
-                  <p><b>Post:</b>{post.text}</p>
-                  </div>
-      
-                  <div className="userOptions">
-                  <Comments postId={post.id} />
-                  <ToggleButton 
-                    fetchPosts={fetchPosts}
-                    likes={post.likes}
-                    dislikes={post.dislikes}
-                    postId={post.id}
-                    postUsername={post.user.username}
-                    postText={post.text}/>
-                  {/* this is a ternary statement for conditional rendering */}
-                  {user.id === post.user.id &&
-                      <><EditPost postId={post.id} text={post.text} fetchPosts={fetchPosts} />
-                      <MDBBtn className='mx-2' color='danger' onClick={() => postDelete(post.id)} style={{ position:'relative', left:'50%' }}>DELETE</MDBBtn></>
-                    }
+            <><>
+              
+            </><div className="post" key={id}>
+                {!token &&
+                  <ul>
+                    <div className="username">
+                      <li>{post.user.username}</li>
                     </div>
-                </ul>}
-            </div>
+                    <div className="text">
+                      <p><b>Post:</b> {post.text}</p>
+                    </div>
+                    <li style={{ color: 'beige' }}>Likes {post.likes}</li>
+                    <li style={{ color: 'beige' }}>Dislikes {post.dislikes}</li>
+                  </ul>}
+                {token &&
+                  <ul>
+                    <div className="username">
+                    <ClickedUserProfile 
+                      username={post.user.username} 
+                      userId={post.user.id}/>
+                    </div>
+                    <div className="text">
+                      <p><b>Post:</b>{post.text}</p>
+                    </div>
+                    <div className="userOptions">
+                      <Comments postId={post.id} />
+                      <ToggleButton
+                        fetchPosts={fetchPosts}
+                        likes={post.likes}
+                        dislikes={post.dislikes}
+                        postId={post.id}
+                        postUsername={post.user.username}
+                        postText={post.text} />
+                      {/* this is a ternary statement for conditional rendering */}
+                      {user.id === post.user.id &&
+                        <><EditPost postId={post.id} text={post.text} fetchPosts={fetchPosts} />
+                          <MDBBtn className='mx-2' color='danger' onClick={() => postDelete(post.id)} style={{ position: 'relative', left: '50%' }}>DELETE</MDBBtn></>}
+                    </div>
+                  </ul>}
+              </div></>
           );
         })}
         </>
