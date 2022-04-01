@@ -72,7 +72,7 @@ const HomePage = () => {
       <div className="APOD">
       <Card style={{ width: '35rem', marginLeft:'27.5%', backgroundColor:'black' }}>
         {/* Added iframe for a videos change of pictures don't end up looking normal or try to find a way to refactor some how */}
-      <iframe src={apod}><Card.Img variant="top" src={apod} style={{ width: '35rem'}}/></iframe>
+      <Card.Img variant="top" src={apod} style={{ width: '35rem'}}/>
       <Card.Body style={{ backgroundColor:'black' }}>
         <Card.Title style={{color:'beige'}}>{title}</Card.Title>
         <Card.Text style={{color:'beige'}}>
