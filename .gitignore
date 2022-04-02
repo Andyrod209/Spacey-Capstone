@@ -130,4 +130,4 @@ dist
 .pnp.*
 
 # Api keys
-/frontend/src/pages/HomePage/API_Keys.json
+/frontend/src/components/APOD/API_Keys.json

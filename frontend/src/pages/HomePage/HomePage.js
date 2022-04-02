@@ -5,22 +5,19 @@ import useAuth from "../../hooks/useAuth";
 import "./HomePage.css";
 import CreatePost from "../../components/CreatePost/CreatePost";
 import EditPost from "../../components/EditPost/EditPost";
-import keys from "./API_Keys.json"
 import ToggleButton from "../../components/ToggleButton/ToggleButton";
 import PeopleInSpace from "../../components/PeopleInSpace/PeopleInSpace";
 import Comments from "../../components/Comments/Comments";
 import { MDBBtn } from 'mdb-react-ui-kit';
-import {Card} from 'react-bootstrap'
 import ClickedUserProfile from "../ClickedUserProfile/ClickedUserProfile";
+import APOD from "../../components/APOD/APOD";
 
 const HomePage = () => {
   // The "user" value from this Hook contains the decoded logged in user information (username, first name, id)
   // The "token" value is the JWT token that you will send in the header of any request requiring authentication
   const [user, token] = useAuth();
   const [posts, setPosts] = useState([]);
-  const [apod, setApod] = useState();
-  const [title, setTitle] = useState();
-  const [explanation, setExplanation] = useState();
+  
 
   const fetchPosts = async () => {
     try {
@@ -35,7 +32,6 @@ const HomePage = () => {
 
   useEffect(() => {
     fetchPosts();
-    getAPOD();
   }, [token]);
 
   async function postDelete(id){
@@ -50,18 +46,6 @@ const HomePage = () => {
   }
   };
 
-  async function getAPOD(){
-    let response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${keys.NasaApiKey}`)
-    setApod(response.data.url)
-    setExplanation(response.data.explanation)
-    setTitle(response.data.title)
-  }
-  
-  // arrow function did not work ^^^^^^
-  // got undefined on console 
-  // maybe passing route you can pass it without having render on homepage
-  // to be tested when I return...
-
   return (
       <>
     <div className="container">
@@ -70,16 +54,7 @@ const HomePage = () => {
         {token &&
           <h1 style={{margin:'1%', color:'beige'}}>Welcome {user.username}!</h1>}
       <div className="APOD">
-      <Card style={{ width: '35rem', marginLeft:'27.5%', backgroundColor:'black' }}>
-        {/* Added iframe for a videos change of pictures don't end up looking normal or try to find a way to refactor some how */}
-      <Card.Img variant="top" src={apod} style={{ width: '35rem'}}/>
-      <Card.Body style={{ backgroundColor:'black' }}>
-        <Card.Title style={{color:'beige'}}>{title}</Card.Title>
-        <Card.Text style={{color:'beige'}}>
-          {explanation}
-        </Card.Text>
-      </Card.Body>
-    </Card>
+      <APOD />
     </div>
         <br />
         <h3><b style={{color:'beige'}}>People In Space: </b></h3>
@@ -99,10 +74,12 @@ const HomePage = () => {
                 {!token &&
                   <ul>
                     <div className="username">
-                      <li>{post.user.username}</li>
+                    <ClickedUserProfile 
+                      username={post.user.username} 
+                      userId={post.user.id}/>
                     </div>
                     <div className="text">
-                      <p><b>Post:</b> {post.text}</p>
+                      <p><b>Post: </b> {post.text}</p>
                     </div>
                     <li style={{ color: 'beige' }}>Likes {post.likes}</li>
                     <li style={{ color: 'beige' }}>Dislikes {post.dislikes}</li>
@@ -115,7 +92,7 @@ const HomePage = () => {
                       userId={post.user.id}/>
                     </div>
                     <div className="text">
-                      <p><b>Post:</b>{post.text}</p>
+                      <p><b>Post: </b>{post.text}</p>
                     </div>
                     <div className="userOptions">
                       <Comments postId={post.id} />
