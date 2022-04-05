@@ -1,5 +1,4 @@
 import keys from "./API_Keys.json"
-import {Card} from 'react-bootstrap'
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Carousel from 'react-bootstrap/Carousel'
@@ -20,12 +19,16 @@ const APOD = () => {
     
     const [index, setIndex] = useState(0);
     const [showText, setShowText] = useState(false);
+    const [date1, setDate1] = useState()
+    const [date2, setDate2] = useState()
 
 
     useEffect(() => {
-        getAPOD1();
-        
-      }, [showText]);
+      getDate();
+      getAPOD1();
+      getAPOD2();
+      getAPOD3();
+      }, [showText, date1, date2]);
 
     async function getAPOD1(){
         let response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${keys.NasaApiKey}&thumbs=true`)
@@ -35,29 +38,34 @@ const APOD = () => {
       }
 
     async function getAPOD2(){
-        let response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${keys.NasaApiKey}&thumbs=true`)
-        setApod1(response.data.url)
-        setExplanation1(response.data.explanation)
-        setTitle1(response.data.title)
+        let response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${keys.NasaApiKey}&thumbs=true&date=${date1}`)
+        setApod2(response.data.url)
+        setExplanation2(response.data.explanation)
+        setTitle2(response.data.title)
       }
 
     async function getAPOD3(){
-        let response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${keys.NasaApiKey}&thumbs=true`)
-        setApod1(response.data.url)
-        setExplanation1(response.data.explanation)
-        setTitle1(response.data.title)
+        let response = await axios.get(`https://api.nasa.gov/planetary/apod?api_key=${keys.NasaApiKey}&thumbs=true&date=${date2}`)
+        setApod3(response.data.url)
+        setExplanation3(response.data.explanation)
+        setTitle3(response.data.title)
       }
 
       const handleSelect = (selectedIndex, e) => {
+        e.preventDefault();
         setIndex(selectedIndex);
       }
-    // try and find a way to set the date
+
       function getDate(){
         let dt = new Date();
-        dt.setDate(dt.getDate()-2)
-        console.log(dt)
+        let dd1 = String(dt.getDate()-1).padStart(2, '0');
+        let dd2 = String(dt.getDate()-2).padStart(2, '0');
+        let mm = String(dt.getMonth() + 1).padStart(2, '0');
+        let yyyy = dt.getFullYear();
+        setDate1(yyyy+'-'+mm+"-"+dd1);
+        setDate2(yyyy+'-'+mm+"-"+dd2);
       }
-
+      
       const handleClick = (e) => {
         e.preventDefault();
         setShowText(true);
@@ -65,18 +73,6 @@ const APOD = () => {
 
     return ( 
         <>
-        <Card style={{ width: '35rem', marginLeft:'27.5%', backgroundColor:'black' }}>
-            {/* Added iframe for a videos change of pictures don't end up looking normal or try to find a way to refactor some how */}
-            <Card.Img variant="top" src={apod1} style={{ width: '35rem'}}/>
-            <Card.Body style={{ backgroundColor:'black' }}>
-                <Card.Title style={{color:'beige'}}>{title1}</Card.Title>
-                <Card.Text style={{color:'beige'}}>
-                {explanation1}
-                </Card.Text>
-            </Card.Body>
-        </Card>
-        
-
         <Carousel activeIndex={index} onSelect={handleSelect}>
             <Carousel.Item>
              <h3 style={{color:'beige'}}>{title1}</h3>  {/* This the title for the first carousel.*/}
@@ -94,27 +90,33 @@ const APOD = () => {
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
+            <h3 style={{color:'beige'}}>{title2}</h3>  {/* This the title for the first carousel.*/}
                 <img
                 className="d-block w-100"
-                src="holder.js/800x400?text=Second slide&bg=282c34"
-                alt="Second slide"
+                src={apod2}
+                alt="First slide"
                 />
 
             <Carousel.Caption>
-                <h3>Second slide label</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            {showText  
+                ?<p onClick={() => setShowText(false)}>{explanation2}</p>
+                :<button onClick={handleClick}>Read more</button>
+              }
             </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
+            <h3 style={{color:'beige'}}>{title3}</h3>  {/* This the title for the first carousel.*/}
                 <img
                 className="d-block w-100"
-                src="holder.js/800x400?text=Third slide&bg=20232a"
-                alt="Third slide"
+                src={apod3}
+                alt="First slide"
                 />
 
             <Carousel.Caption>
-                <h3>Third slide label</h3>
-                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+            {showText  
+                ?<p onClick={() => setShowText(false)}>{explanation3}</p>
+                :<button onClick={handleClick}>Read more</button>
+              }
             </Carousel.Caption>
             </Carousel.Item>
         </Carousel>
