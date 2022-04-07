@@ -94,9 +94,9 @@ const ToggleButton = (props) => {
 
     return ( 
             
-            <><button className={like} type='button' onClick={() => handleLikeClick()} style={{margin:'1%'}}>
+            <><button className={[likeActive? 'like':null, 'normal'].join(' ')} type='button' onClick={() => handleLikeClick()} style={{margin:'1%'}}>
             <i onclick={() => thumbsUpOrDown(this)} className="fa fa-thumbs-up">{props.likes}</i>
-        </button><button className={dislike} type='button' onClick={handleDislikeClick}>
+        </button><button className={[dislikeActive? 'dislike' :null, 'normal'].join(' ')} type='button' onClick={handleDislikeClick}>
                 <i onclick={() => thumbsUpOrDown(this)} className="fa fa-thumbs-down">{props.dislikes}</i>
             </button></>
      );

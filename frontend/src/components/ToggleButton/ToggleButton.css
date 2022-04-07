@@ -6,7 +6,10 @@
 }
 
 .normal {
-    background-color: white;
+    color:white;
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
 }
 
 .dislike {
