@@ -12,9 +12,6 @@ const ToggleButton = (props) => {
     const [likeActive, setLikeActive] = useState(false);
     const [dislikeActive, setDislikeActive] = useState(false);
 
-    const[like, setLike] = useState('normal')
-    const[dislike, setDislike] = useState('normal')
-
     async function ChangePost(){
         try {
         let post = {
@@ -50,15 +47,6 @@ const ToggleButton = (props) => {
                 setDislikes(dislikes - 1);
             }
         }
-        if (like === 'normal'){
-            setLike('like');
-        }
-        else {
-            setLike('normal')
-        }
-        if (dislike === "dislike"){
-            setDislike("normal")
-        }
         props.fetchPosts();
     }
     
@@ -75,15 +63,6 @@ const ToggleButton = (props) => {
                 setDislikes(dislikes + 1);
                 setLikes(likes - 1);
             }
-        }
-        if (dislike === 'normal'){
-            setDislike('dislike');
-        }
-        else {
-            setDislike('normal')
-        }
-        if (like === 'like') {
-            setLike('normal');
         }
         props.fetchPosts();
     }
