@@ -44,7 +44,7 @@ const Comments = (props) => {
               ></MDBBtn>
             </MDBModalHeader>
             <MDBModalBody>
-              {comments.map((comment, id) => {
+              {[...comments].reverse().map((comment, id) => {
                 return (
                   <div className="form-grid">
                     <div key={id} className="form-control" >
