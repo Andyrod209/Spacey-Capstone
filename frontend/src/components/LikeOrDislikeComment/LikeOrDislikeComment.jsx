@@ -1,6 +1,7 @@
 import { useState, useEffect} from "react";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
+import './LikeOrDislikeComment.css'
 
 const LikeOrDislikeComment = (props) => {
 
@@ -66,8 +67,8 @@ const LikeOrDislikeComment = (props) => {
 
     return ( 
     <div>
-        <button onClick={() => giveLike()}>{props.likes} Like</button>
-        <button onClick={() => giveDislike()}>{props.dislikes} Dislike</button>
+        <button className={[likeActive? 'commentLike':null, 'commentNormal'].join(' ')} type='button' onClick={() => giveLike()}>{props.likes} Like</button>
+        <button className={[dislikeActive? 'commentDislike' :null, 'commentNormal'].join(' ')} type='button' onClick={() => giveDislike()}>{props.dislikes} Dislike</button>
     </div> 
     );
 }

@@ -1,0 +1,14 @@
+.commentLike {
+    background-color: rgba(0, 116, 6, 0.904);
+}
+
+.commentNormal {
+    color:rgb(0, 0, 0);
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.commentDislike {
+    background-color: red;
+}
