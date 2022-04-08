@@ -9,10 +9,13 @@ import { MDBBtn,
     MDBModalBody,
     MDBModalFooter,
   } from 'mdb-react-ui-kit';
+import useAuth from "../../hooks/useAuth";
 import CommentsForum from '../CommentsForum/CommentsForum';
 import LikeOrDislikeComment from '../LikeOrDislikeComment/LikeOrDislikeComment';
 
 const Comments = (props) => {
+
+  const [user, token] = useAuth();
 
     const [scrollableModal, setScrollableModal] = useState(false);
     const [comments, setComments] = useState([]);
@@ -50,7 +53,9 @@ const Comments = (props) => {
                     <div key={id} className="form-control" >
                     <h4 className="form-heading">{comment.user.username}</h4>
                     <div  className="post-content">{comment.text} 
-                    <LikeOrDislikeComment 
+                    
+                    {user
+                    ?<LikeOrDislikeComment 
                       getComments={getComments} 
                       commentId={comment.id}
                       commentUsername={comment.user.username}
@@ -58,14 +63,22 @@ const Comments = (props) => {
                       postId={props.postId} 
                       commentText={comment.text}
                       likes={comment.likes}
-                      dislikes={comment.dislikes}/> </div>
+                      dislikes={comment.dislikes}/> 
+                    :<><p>likes {comment.likes}</p>
+                    <p>dislikes {comment.dislikes}</p></>
+                    }
+                    
                   </div>
+                    </div>
                   </div>
                 );
               })}
             </MDBModalBody>
             <MDBModalFooter>
-              <CommentsForum postId={props.postId} getComments={getComments}/>
+              {user
+                ?<CommentsForum postId={props.postId} getComments={getComments}/>
+                :<p>Login to comment</p>
+              }
               {/* <MDBBtn color='secondary' onClick={() => setScrollableModal(!setScrollableModal)}>
                 Close
               </MDBBtn> */}

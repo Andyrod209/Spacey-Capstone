@@ -81,6 +81,7 @@ const HomePage = () => {
                     <div className="text">
                       <p><b>Post: </b> {post.text}</p>
                     </div>
+                    <Comments postId={post.id} />
                     <li style={{ color: 'beige' }}>Likes {post.likes}</li>
                     <li style={{ color: 'beige' }}>Dislikes {post.dislikes}</li>
                   </ul>}
